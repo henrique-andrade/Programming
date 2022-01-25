@@ -121,6 +121,7 @@ CREATE TABLE comvendas(
   d_datavenda date, 
   PRIMARY key(n_numevenda)
 );
+
 CREATE TABLE comivenda(
   n_numeivenda int NOT NULL AUTO_INCREMENT, 
   n_numevenda int NOT NULL, 
