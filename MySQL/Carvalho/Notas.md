@@ -1,25 +1,59 @@
-# Notas do livro "MySQL: Comece com o principal banco de dados open source do mercado"
+# Introdução ao MySQL
+
+[toc]
+
+## Modelagem dos dados
+
+### Fase conceitual
+
+Fase na qual temos um cenário da vida real, e, baseado nele, faremos o levantamento de requisitos que o projeto deve atender. Nesta etapa, devemos explorar todas as necessidades do problema que vamos resolver e, com essas informações, conseguiremos criar um modelo conceitual, que será independente da tecnologia que utilizaremos. Registraremos que dados podem aparecer no banco, mas não como estes dados estão armazenados. Por exemplo: cadastro de clientes (dados necessários: nome fantasia, razão social, endereço, CNPJ, cidade, estado, telefone etc.).
+
+### Fase lógica
+
+Ao contrário dos modelos conceituais, os lógicos são os modelos em que os objetos, suas características e seus relacionamentos têm suas representações de acordo com as regras de implementação e limitantes impostos por alguma tecnologia. Ele é utilizado já na fase de projeto mais independente de dispositivo físico, implementando conceitos de construção de um banco de dados. Por exemplo: a figura adiante.
+
+### Fase física
+
+Elaborada a partir do modelo lógico, leva em consideração limites impostos por dispositivo físico e por requisitos não funcionais dos programas que acessam os dados. Um SGBD diferente poderá definir um modo diferente de implementação física das características e dos recursos necessários para o armazenamento e a manipulação das estruturas de dados. Para exemplificar, apresento-o na figura Diagrama de Entidade e Relacionamento (mais adiante), que é o diagrama do nosso projeto.
 
 ## Inicialização do MySQL
 
+```bash
 sudo mysql -u root -p
+```
 
-## Criação do banco de dados
+## Criação de usuários
 
-### Usuários
-
+```mysql
 create user usermysql@'%' identified by 'cursomysql';
+```
+
+```mysql
 grant all privileges on *.* to usermysql@'%' with grant option;
+```
 
 Se aparecer o erro *Authentication plugin 'caching_sha2_password' cannot be loaded* em algum programa basta usar esse comendo:
 
+```mysql
 ALTER USER 'usermysql'@'%' IDENTIFIED WITH mysql_native_password BY 'cursomysql';
+```
 
-### Tabelas
+## Criação do banco de dados
 
-create database comercial;
-show databases;
-use comercial;
+
+```mysql
+CREATE DATABASE comercial;
+```
+
+```mysql
+SHOW DATABASES;
+```
+
+### Criação de tabelas
+
+```mysql
+USE comercial;
+```
 
 ```mysql
 CREATE TABLE comclien(
@@ -123,5 +157,4 @@ Comercial
 | d_dataclien | date         |
 | c_cnpjclien | varchar(20)  |
 | c_foneclien | varchar(20)  |
-
 
