@@ -64,7 +64,7 @@ CREATE TABLE comclien(
   d_dataclien date,
   c_cnpjclien varchar(20),
   c_foneclien varchar(20),
-PRIMARY KEY (n_numeclien)
+  PRIMARY KEY (n_numeclien)
 );
 
 CREATE TABLE comforne(
@@ -73,7 +73,7 @@ CREATE TABLE comforne(
   c_nomeforne varchar(100), 
   c_razaforne varchar(100), 
   c_foneforne varchar(20), 
-  PRIMARY key(n_numeforne)
+  PRIMARY KEY (n_numeforne)
 );
 
 CREATE TABLE comvende(
@@ -83,7 +83,7 @@ CREATE TABLE comvende(
   c_razavende varchar(100), 
   c_fonevende varchar(20), 
   n_porcvende float(10, 2), 
-  PRIMARY key(n_numevende)
+  PRIMARY KEY (n_numevende)
 );
 
 CREATE TABLE comprodu(
@@ -93,7 +93,7 @@ CREATE TABLE comprodu(
   n_valoprodu float(10, 2), 
   c_situprodu varchar(1), 
   n_numeforne int, 
-  PRIMARY key(n_numeprodu)
+  PRIMARY KEY (n_numeprodu)
 );
 
 CREATE TABLE comvenda(
@@ -106,7 +106,7 @@ CREATE TABLE comvenda(
   n_descvenda float(10, 2), 
   n_totavenda float(10, 2), 
   d_datavenda date, 
-  PRIMARY key(n_numevenda)
+  PRIMARY KEY (n_numevenda)
 );
 
 CREATE TABLE comvendas(
@@ -119,7 +119,7 @@ CREATE TABLE comvendas(
   n_descvenda float(10, 2), 
   n_totavenda float(10, 2), 
   d_datavenda date, 
-  PRIMARY key(n_numevenda)
+  PRIMARY KEY (n_numevenda)
 );
 
 CREATE TABLE comivenda(
@@ -129,7 +129,7 @@ CREATE TABLE comivenda(
   n_valoivenda float(10, 2), 
   n_qtdeivenda int, 
   n_descivenda float(10, 2), 
-  PRIMARY key(n_numeivenda)
+  PRIMARY KEY (n_numeivenda)
 );
 
 ```
