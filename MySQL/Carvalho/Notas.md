@@ -159,3 +159,19 @@ Comercial
 | c_cnpjclien | varchar(20)  |
 | c_foneclien | varchar(20)  |
 
+## Extras
+
+### Obtenção da última data de uma dada série
+
+```mysql
+SELECT
+    a.codigo,
+    b.data,
+    b.valor
+FROM
+    metadados AS a
+    INNER JOIN dados AS b
+        ON a.idserie = b.idserie
+WHERE
+    codigo IN ("IPCA_FGV_media_1101002", "IPCA_FGV_media_1101053") AND data = max(data);
+```
