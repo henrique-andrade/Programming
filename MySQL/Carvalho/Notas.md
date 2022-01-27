@@ -387,7 +387,7 @@ Some more or less strict rules:
   - Identifiers (table names, column names, etc.): lowercase
 - If an SQL statement is long, add line breaks to reformat it and make it easier to read.
 
-Fonte: https://dev.**MySQL**.com/doc/internals/en/coding-style.html
+Fonte: https://dev.MySQL.com/doc/internals/en/coding-style.html
 
 ### Obtenção da última data de uma dada série
 
