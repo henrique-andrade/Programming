@@ -209,9 +209,71 @@ DROP TABLE comvendas;
 
 ### Inserindo registros
 
+```mysql
+INSERT INTO comclien(
+  n_numeclien,
+  c_codiclien,
+  c_nomeclien,
+  c_razaclien,
+  d_dataclien,
+  c_cnpjclien,
+  c_foneclien,
+  c_cidaclien,
+  c_estaclien)
+VALUES (
+  1,
+  '0001',
+  'AARONSON',
+  'AARONSON FURNITURE LTDA',
+  '2015-02-17',
+  '17.807.928/0001-85',
+  '(21) 8167-6584',
+  'QUEIMADOS',
+  'RJ');
+```
+
 ### Alterando registros
 
+Da mesma maneira que conseguimos incluir registros no banco de dados, podemos alterá-los. Uma vez que temos um sistema em produção com pessoas utilizando-o, não podemos excluir os registros para inseri-los corretamente. Por isso, devemos alterá-lo usando o comando `update`. Você fez a inserção no registro de clientes e errou o nome fantasia. No exemplo que eu descrevi anteriormente, coloquei um incorretamente. Agora, quero corrigi-lo.
+
+```mysql
+UPDATE comclien SET c_nomeclien = 'AARONSON FURNITURE' WHERE n_numeclien = 1;
+commit;  
+```
+
+- O `set` informa qual campo será alterado;
+- O `where` indica a condição para fazer a alteração;
+- O `commit` informa ao SGBD que ele pode realmente salvar a alteração do registro.
+
+Se, por engano, fizermos o update incorreto, antes do commit, podemos reverter a situação usando a instrução SQL `rollback`:
+
+```mysql
+UPDATE comclien SET c_nomeclien = 'AARONSON' WHERE n_numeclien = 1;
+rollback;
+```
+
 ### Excluindo registros
+
+Incluímos e alteramos registros. Porém, e se quisermos deletar algum? Para isso, devemos utilizar uma outra instrução SQL: o `delete`. Diferente do `drop`, ele deleta os registros das colunas do banco de dados. O `drop` é usado para excluir objetos do banco, como tabelas, colunas, views, procedures etc.), enquanto, o `delete` deletará os registros das tabelas, podendo excluir apenas uma linha ou todos os registros, como você desejar.
+
+Desta maneira, vamos apagar o primeiro registro da tabela `comclien`:
+
+```mysql
+DELETE FROM comclien WHERE n_numeclien = 1; 
+commit;
+```
+Agora, vamos deletar todos os registros da tabela de clientes:
+
+```mysql
+DELETE FROM comclien;
+commit;
+```
+
+Observe que, ao empregar o `delete`, você também deve usar o `commit` logo após a instrução. Da mesma maneira, podemos também utilizar o `rollback` para não efetivar uma deleção de dados incorretos.
+
+> Lembre-se:
+>
+> Nunca se esqueça de criar as constraints de chave estrangeira das tabelas, pois ao tentar excluir um registro, se houver uma constraint nela e ele estiver sendo utilizado em outra tabela, o SGBD não deixará você excluí-lo com intuito de manter a integridade dos dados.
 
 ## Temos registros: vamos consultar?
 
