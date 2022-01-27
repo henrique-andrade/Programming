@@ -272,7 +272,7 @@ COMMIT;
 
 Observe que, ao empregar o `DELETE`, você também deve usar o `COMMIT` logo após a instrução. Da mesma maneira, podemos também utilizar o `ROLLBACK` para não efetivar uma deleção de dados incorretos.
 
-> Lembre-se:
+> **Atenção!**
 >
 > Nunca se esqueça de criar as constraints de chave estrangeira das tabelas, pois ao tentar excluir um registro, se houver uma constraint nela e ele estiver sendo utilizado em outra tabela, o SGBD não deixará você excluí-lo com intuito de manter a integridade dos dados.
 
@@ -337,9 +337,17 @@ SELECT n_numeclien, c_codiclien, c_razaclien FROM comclien WHERE c_razaclien LIK
 
 O símbolo de `%` é um curinga no **MySQL**. Quando não sabemos uma parte da string, podemos utilizá-lo no início, no meio ou no fim dela.
 
-#### Distinct()
+#### Selecionando valores distintos
+
+Para não selecionar um registro igual ao outro, utilizamos o `DISTINCT`. Com o seguinte código, teremos a lista de clientes que fizeram ao menos uma compra e sem nenhuma repetição.
+
+```mysql
+SELECT DISTINCT n_numeclien FROM comvenda;
+```
 
 ### Subquery ou subconsulta
+
+As subconsultas são alternativas para as joins, que vamos ver logo a seguir. Utilizando-as, conseguimos ter um `SELECT` dentro de outro `SELECT` para nos ajudar a recuperar registros que estão referenciados em outras tabelas.
 
 #### Cláusulas in e not in
 
