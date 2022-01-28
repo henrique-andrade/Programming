@@ -15,17 +15,17 @@ sudo MySQL -u root -p
 ### Criação de usuários
 
 ```mysql
-CREATE USER userMySQL@'%' IDENTIFIED BY 'cursoMySQL';
+CREATE USER usermysql@'%' IDENTIFIED BY 'cursomysql';
 ```
 
 ```mysql
-GRANT ALL PRIVILEGES ON *.* TO userMySQL@'%' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO usermysql@'%' WITH GRANT OPTION;
 ```
 
 Se aparecer o erro *Authentication plugin 'caching_sha2_password' cannot be loaded* em algum programa basta usar esse comendo:
 
 ```mysql
-ALTER USER 'userMySQL'@'%' IDENTIFIED WITH MySQL_native_password BY 'cursoMySQL';
+ALTER USER 'userMySQL'@'%' IDENTIFIED WITH MySQL_native_password BY 'cursomysql';
 ```
 
 ### Criação do banco de dados
