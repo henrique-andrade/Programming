@@ -305,8 +305,6 @@ WHERE
   c_codiclien = '0001';
 ```
 
-
-
 ```mysql
 SELECT 
   n_numeclien, 
@@ -349,7 +347,30 @@ SELECT DISTINCT n_numeclien FROM comvenda;
 
 As subconsultas são alternativas para as joins, que vamos ver logo a seguir. Utilizando-as, conseguimos ter um `SELECT` dentro de outro `SELECT` para nos ajudar a recuperar registros que estão referenciados em outras tabelas.
 
+Antes de demonstrar o uso da *subquery*, vamos aprender a utilização das cláusulas `in`, `not in`, `exists` e `not exists`.
+
 #### Cláusulas in e not in
+
+Para fazermos comparações com mais que dois valores, não conseguiríamos fazer com esses que aprendemos até agora, pois eles aceitam apenas um valor para a comparação. Para exemplificarmos, vamos escrever uma consulta para retornar simultaneamente os clientes que possuem `n_numeclien` igual a 1 e 2.
+
+```mysql
+SELECT c_codiclien, c_razaclien FROM comclien WHERE n_numeclien = 1,2; # Errado!
+SELECT c_codiclien, c_razaclien FROM comclien WHERE n_numeclien IN (1,2); # Certo!
+```
+
+Exemplos de subconsulta:
+
+```mysql
+SELECT c_razaclien FROM comclien WHERE n_numeclien IN
+(SELECT n_numeclien FROM comvenda WHERE n_numeclien);
+```
+
+```mysql
+SELECT c_razaclien FROM comclien WHERE n_numeclien NOT IN
+(SELECT n_numeclien FROM comvenda);
+```
+
+Essa maneira não é muito usada, porque há perda de performance e o código não fica legal. Por isso, aprenderemos a fazer joins: a forma correta para retornamos valores de uma ou mais tabelas em um único `SELECT`.
 
 #### Criação de alias (apelidos das tabelas)
 
