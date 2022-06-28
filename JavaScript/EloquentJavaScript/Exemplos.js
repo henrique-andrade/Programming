@@ -6,4 +6,4 @@ while (count <= 10) {
   count += 1;
 }
 
-alert(total);
+console.log(total);
