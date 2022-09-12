@@ -1,3 +1,8 @@
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2022 Henrique Andrade <henrique.coelho@gmail.com>
+ */
+
 public class MyApp : Gtk.Application {
     public MyApp () {
         Object (
@@ -7,14 +12,17 @@ public class MyApp : Gtk.Application {
     }
 
     protected override void activate () {
-        var button_hello = new Gtk.Button.with_label ("Click me!") {
-            margin = 12
+
+        var button = new Gtk.Button.with_label ("Click me!");
+        var label = new Gtk.Label (null);
+
+        var grid = new Gtk.Grid () {
+            orientation = Gtk.Orientation.VERTICAL,
+            row_spacing = 6
         };
 
-        button_hello.clicked.connect (() => {
-            button_hello.label = "Hello World!";
-            button_hello.sensitive = false;
-        });
+        grid.add (button);
+        grid.add (label);
 
         var main_window = new Gtk.ApplicationWindow (this) {
             default_height = 300,
@@ -22,7 +30,13 @@ public class MyApp : Gtk.Application {
             title = "Hello World"
         };
 
-        main_window.add (button_hello);
+        main_window.add (grid);
+
+        button.clicked.connect (() => {
+            label.label = "Hello World!";
+            button.sensitive = false;
+        });
+
         main_window.show_all ();
     }
 
