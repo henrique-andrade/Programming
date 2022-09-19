@@ -1,0 +1,10 @@
+Rust for Beginners – Get Started with the Most Loved Programming Language
+https://www.freecodecamp.org/news/rust-getting-started-with-the-most-loved-programming-language/
+
+Rust by Example
+https://doc.rust-lang.org/stable/rust-by-example/
+
+Learn Rust Programming Course – Interactive Rust Language Tutorial on Replit
+https://www.freecodecamp.org/news/rust-in-replit/
+
+
