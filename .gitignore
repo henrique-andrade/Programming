@@ -13,3 +13,8 @@ Cargo.lock
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
 
+MySQL/.DS_Store
+Rust/.DS_Store
+Vala/.DS_Store
+JavaScript/.DS_Store
+.DS_Store
