@@ -257,6 +257,132 @@ app.run([]);
    gjs my_first_app.js
    ```
 
+Vamos corrigir isso! Vou detalhar linha por linha o **"Primeiro Exemplo Completo"**, explicando cada parte do código para que você entenda exatamente o que está acontecendo.
+
+#### Explicação Linha a Linha
+
+```javascript
+// Importando as bibliotecas necessárias
+const Gtk = imports.gi.Gtk; // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio; // Biblioteca para gerenciar a aplicação
+```
+
+- **`Gtk`**: Contém todas as classes e funções para criar interfaces gráficas.
+- **`Gio`**: Gerencia aplicativos e oferece suporte para funcionalidades como integração com o sistema operacional.
+
+```javascript
+// Criando uma aplicação GTK
+const app = new Gtk.Application({
+    application_id: "org.gtk.example",
+    flags: Gio.ApplicationFlags.FLAGS_NONE, // Sem configurações adicionais
+});
+```
+
+- **`Gtk.Application`**:
+  - Classe que gerencia o ciclo de vida da aplicação.
+  - O `application_id` identifica exclusivamente o aplicativo no sistema.
+  - **`FLAGS_NONE`**: Nenhuma configuração especial é aplicada à aplicação.
+
+```javascript
+// Conectando a função que será chamada ao iniciar a aplicação
+app.connect("activate", function () {
+```
+
+- **`app.connect("activate", ...)`**:
+  - O evento `"activate"` é disparado automaticamente quando a aplicação é iniciada.
+  - Aqui configuramos o que acontece quando o aplicativo começa (ex.: criar janelas e widgets).
+
+```javascript
+    // Criando um botão com texto inicial
+    const button = new Gtk.Button({ label: "Click me!" });
+```
+
+- **`Gtk.Button`**:
+  - Classe usada para criar botões.
+  - A propriedade **`label`** define o texto exibido no botão.
+
+```javascript
+    // Adicionando comportamento ao botão
+    let clicked = false; // Variável para rastrear o estado do botão
+    button.connect("clicked", function () {
+        if (!clicked) {
+            button.set_label("Clicked!");
+        } else {
+            button.set_label("Click me again!");
+        }
+        clicked = !clicked; // Alterna o estado entre clicado e não clicado
+    });
+```
+
+- **Variável `clicked`**:
+  - Armazena o estado atual do botão (se foi clicado ou não).
+- **`button.connect("clicked", ...)`**:
+  - Adiciona um "ouvinte de eventos" ao botão.
+  - Sempre que o botão for clicado, a função passada aqui será executada.
+- **Lógica condicional**:
+  - Se `clicked` for `false`, muda o texto do botão para `"Clicked!"`.
+  - Caso contrário, redefine o texto para `"Click me again!"`.
+  - A variável `clicked` é alternada entre `true` e `false` para rastrear o estado.
+
+```javascript
+    // Criando a janela principal
+    const window = new Gtk.ApplicationWindow({
+        application: app,       // Associando a janela à aplicação
+        title: "My First GTK App", // Título da janela
+        default_width: 400,     // Largura inicial
+        default_height: 300,    // Altura inicial
+    });
+```
+
+- **`Gtk.ApplicationWindow`**:
+  - Uma janela associada à aplicação criada com `Gtk.Application`.
+  - **Propriedades**:
+    - `application`: Liga a janela à aplicação.
+    - `title`: Define o título exibido na barra superior.
+    - `default_width` e `default_height`: Dimensões iniciais da janela.
+
+```javascript
+    // Adicionando o botão à janela
+    window.set_child(button);
+```
+
+- **`set_child(button)`**:
+  - Define o botão como o conteúdo principal da janela.
+  - No GTK 4, uma janela pode conter apenas um widget diretamente. Para organizar múltiplos widgets, usamos containers (ex.: `Gtk.Box`, que veremos mais adiante).
+
+```javascript
+    // Mostrando a janela
+    window.present();
+});
+
+```
+- **`present()`**:
+  - Exibe a janela na tela.
+  - Garante que a janela será mostrada ao usuário.
+
+```javascript
+// Executando a aplicação
+app.run([]);
+```
+
+- **`app.run([])`**:
+  - Inicia o loop principal da aplicação, permitindo que ela reaja a eventos (como cliques em botões).
+  - O aplicativo continua em execução até que todas as janelas sejam fechadas.
+
+#### Resumo do Código
+
+1. **Configuração inicial**:
+   - Importação das bibliotecas (`Gtk` e `Gio`).
+   - Criação da aplicação com `Gtk.Application`.
+
+2. **Construção da interface**:
+   - Um botão é criado e configurado para alternar seu texto quando clicado.
+   - Uma janela é criada e o botão é adicionado como seu conteúdo.
+
+3. **Execução do aplicativo**:
+   - A janela é exibida quando o aplicativo é ativado.
+   - O aplicativo entra no loop principal até ser encerrado.
+
 ---
 
 ## O que aprendemos até agora
@@ -269,3 +395,44 @@ app.run([]);
    - Widgets como `Gtk.Button` e `Gtk.ApplicationWindow`.
 
 ---
+
+## Glossário
+
+### Introspecção
+
+**Introspecção** é a capacidade de um programa **examinar suas próprias estruturas ou metadados** em tempo de execução. No contexto do GJS e do GTK, a introspecção permite que o JavaScript "descubra" e utilize funcionalidades definidas em bibliotecas escritas em outras linguagens, como C.
+
+#### Introspecção no GJS e GTK
+
+O GJS usa um sistema chamado **GObject Introspection (GI)**, que é uma tecnologia que expõe APIs de bibliotecas GTK e GNOME para linguagens dinâmicas como JavaScript (e Python).
+
+#### Como funciona o GObject Introspection?
+
+1. **Definição das APIs no C**:
+    - As bibliotecas GTK e GNOME são escritas em C.
+    - Cada classe, sinal, método e propriedade é definida no código C.
+2. **Metadados gerados automaticamente**:
+    - O sistema GI cria arquivos chamados **typelibs** que descrevem as classes, métodos e sinais dessas bibliotecas.
+    - Esses arquivos contêm informações sobre:
+        - Nomes das classes e métodos.
+        - Tipos de dados dos parâmetros e retornos.
+        - Eventos (sinais) disponíveis.
+3. **Ligações para linguagens dinâmicas**:
+    - No GJS, o módulo `imports.gi` usa esses metadados para "traduzir" as APIs em C para JavaScript.
+    - Isso significa que você pode acessar bibliotecas escritas em C diretamente em JavaScript sem precisar escrever código em C.
+
+#### Por que isso é útil no GJS?
+
+Graças à introspecção:
+
+- Você não precisa criar bindings manualmente:
+
+    - Antes da GI, era necessário escrever códigos específicos para cada linguagem que desejava usar o GTK (bindings). Agora, o GJS faz isso automaticamente.
+
+- Facilidade para linguagens dinâmicas:
+
+    - Linguagens como JavaScript e Python podem acessar bibliotecas GTK de forma nativa.
+
+- Consistência entre linguagens:
+
+    - O comportamento e a sintaxe do GTK são consistentes entre JavaScript e Python porque ambas usam GI.
