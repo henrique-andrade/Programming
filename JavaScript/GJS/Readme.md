@@ -24,7 +24,7 @@ Ao combinar **JavaScript** e **GTK**, é possível criar aplicações desktop na
 
 ---
 
-## O Que é Orientação a Objetos?
+## O que é Orientação a Objetos?
 
 **Orientação a objetos (OO)** é um paradigma de programação que organiza o código em torno de **objetos**, que são criados a partir de **classes**. Este modelo ajuda a manter o código modular, reutilizável e mais fácil de entender.
 
@@ -43,7 +43,7 @@ No decorrer deste guia, exploraremos como aplicar esses conceitos na prática pa
 
 ---
 
-## O Que Vamos Aprender?
+## O que vamos aprender?
 
 1. **Configuração do Ambiente**:
    - Instalação e configuração de ferramentas necessárias no macOS e Linux.
@@ -63,7 +63,7 @@ No decorrer deste guia, exploraremos como aplicar esses conceitos na prática pa
 
 ---
 
-## Compatibilidade com Sistemas
+## Compatibilidade com sistemas
 
 Este guia foi pensado para funcionar tanto no **macOS** quanto no **Linux**, dois sistemas amplamente usados para desenvolvimento. Instruções detalhadas serão fornecidas para ambos os ambientes, garantindo que você consiga configurar seu sistema e seguir os exemplos apresentados.
 
@@ -124,29 +124,38 @@ Após esses passos, as bibliotecas estarão prontas para uso no Fedora.
 
 Após a instalação, teste o ambiente com um código mínimo:
 
-1. Crie o arquivo `test_gtk4.js` com o seguinte conteúdo:
+1. Crie o arquivo `installation_test.js` com o seguinte conteúdo:
    ```javascript
    const Gtk = imports.gi.Gtk;
+   const Gio = imports.gi.Gio;
    
-   Gtk.init();
-   
-   let window = new Gtk.Window({
-       title: "Test GTK 4",
-       default_width: 400,
-       default_height: 300,
+   // Criando uma aplicação GTK
+   const app = new Gtk.Application({
+       application_id: "org.gtk.example.test",
+       flags: Gio.ApplicationFlags.FLAGS_NONE,
    });
    
-   window.connect("close-request", () => {
-       Gtk.main_quit();
-       return false;
+   // Conectando o evento "activate" para configurar a interface
+   app.connect("activate", function () {
+       // Criando uma janela
+       const window = new Gtk.ApplicationWindow({
+           application: app,        // Associando a janela à aplicação
+           title: "Test GTK 4",     // Título da janela
+           default_width: 400,      // Largura inicial
+           default_height: 300,     // Altura inicial
+       });
+   
+       // Mostrando a janela
+       window.present();
    });
    
-   window.present();
+   // Executando a aplicação
+   app.run([]);
    ```
-
+   
 2. Execute o script:
    ```bash
-   gjs test_gtk4.js
+   gjs installation_test.js
    ```
 
 Se uma janela intitulada **"Test GTK 4"** aparecer, o ambiente está funcionando.
@@ -191,7 +200,7 @@ Antes de prosseguir com mais exemplos, vamos reforçar como **orientação a obj
 
 ---
 
-### Primeiro Exemplo Completo
+### Primeiro exemplo completo
 
 Aqui está um exemplo prático de um aplicativo com **JavaScript e GJS**, incluindo comentários para facilitar o entendimento:
 
@@ -241,7 +250,7 @@ app.connect("activate", function () {
 app.run([]);
 ```
 
-#### **Como Executar**
+#### **Como executar**
 1. Salve o código acima como `my_first_app.js`.
 2. Execute:
    ```bash
@@ -250,7 +259,7 @@ app.run([]);
 
 ---
 
-## O Que Aprendemos Até Agora
+## O que aprendemos até agora
 
 1. **Configurar o ambiente GJS com GTK no macOS**.
 2. **Entender a orientação a objetos no contexto do GJS**:
