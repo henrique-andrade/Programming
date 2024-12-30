@@ -4,11 +4,11 @@
 
 ## 1. Introdução
 
-Este documento foi criado para apresentar um guia prático sobre como desenvolver aplicações gráficas utilizando **JavaScript** e o **GTK**. O foco será explorar as ferramentas e conceitos fundamentais para construir interfaces gráficas modernas e interativas, tanto no **macOS** quanto no **Linux**.
+Este guia foi criado para apresentar um caminho prático e bem estruturado para desenvolver aplicações gráficas utilizando **JavaScript** e o **GTK**. Nele, exploramos desde conceitos básicos até tópicos mais avançados, ajudando você a criar interfaces gráficas modernas, interativas e funcionais.
 
-O desenvolvimento será orientado pelo paradigma de **orientação a objetos (OO)**, um modelo de programação amplamente usado para organizar e estruturar código de maneira eficiente e modular. Este guia foi pensado especialmente para quem já possui experiência programando em R, com explicações que traçam paralelos entre conceitos de OO no GJS e elementos conhecidos do R.
+Embora JavaScript seja amplamente conhecido no contexto do desenvolvimento web, este guia foca no uso de **GJS** (GNOME JavaScript Bindings), uma ferramenta poderosa para criar aplicações desktop nativas, especialmente para ambientes Linux e macOS.
 
-Ao longo do texto, conceitos como classes, instâncias, propriedades e métodos serão apresentados, sempre trazendo comparações com práticas do R, como o uso de data frames e funções.
+O guia é especialmente útil para programadores com experiência prévia em **R**, estabelecendo paralelos claros entre práticas do R e o paradigma de orientação a objetos (OO), central no desenvolvimento com GTK.
 
 ### Por que JavaScript e GTK?
 
@@ -459,14 +459,14 @@ app.connect("activate", function () {
 app.run([]);
 ```
 
-### Como executar
+#### Como executar
 1. Salve o código acima como `my_gtk_box.js`.
 2. Execute:
    ```bash
    gjs my_gtk_box.js
    ```
 
-### Explicação linha a linha
+#### Explicação linha a linha
 
 Aqui está a explicação detalhada, linha por linha, do script **`my_gtk_box.js`**:
 
@@ -596,7 +596,7 @@ app.run([]);
     - O loop continua até que todas as janelas sejam fechadas.
 
 
-### Resumo do Código
+#### Resumo do Código
 
 1. Configuração:
     - Especificamos a versão do GTK e importamos os módulos necessários.
@@ -689,7 +689,7 @@ app.connect("activate", function () {
 app.run([]);
 ```
 
-### Como executar
+#### Como executar
 
 1. Salve o código acima como `my_gtk_grid.js`.
 
@@ -699,7 +699,7 @@ app.run([]);
     gjs my_gtk_grid.js
     ```
 
-### Explicação linha a linha
+#### Explicação linha a linha
 
 **Parte 1: Importando e Configurando Bibliotecas**
 
@@ -840,7 +840,7 @@ app.run([]);
 - O que faz?
     - Inicia o loop principal da aplicação, permitindo que ela responda a eventos (como entrada de texto ou fechamento da janela).
 
-### Resumo do código
+#### Resumo do código
 
 1. **Configuração**:
     - Define a versão do GTK e importa as bibliotecas necessárias.
@@ -855,7 +855,189 @@ app.run([]);
 
 ### 7.3 Gtk.Stack
 
+`Gtk.Stack` é um container que permite alternar entre diferentes widgets ou layouts dentro de um mesmo espaço.
 
+### Exemplo Prático: Gtk.Stack
+
+Aqui está um exemplo:
+
+```javascript
+imports.gi.versions.Gtk = "4.0";
+const Gtk = imports.gi.Gtk;
+const Gio = imports.gi.Gio;
+
+const app = new Gtk.Application({
+    application_id: "org.gtk.example.stack",
+    flags: Gio.ApplicationFlags.FLAGS_NONE,
+});
+
+app.connect("activate", () => {
+    const window = new Gtk.ApplicationWindow({
+        application: app,
+        title: "Gtk.Stack Example",
+        default_width: 600,
+        default_height: 400,
+    });
+
+    const stack = new Gtk.Stack();
+
+    // Criando duas páginas
+    const label1 = new Gtk.Label({ label: "This is Page 1" });
+    const label2 = new Gtk.Label({ label: "This is Page 2" });
+
+    stack.add_named(label1, "page1");
+    stack.add_named(label2, "page2");
+
+    const stackSwitcher = new Gtk.StackSwitcher({ stack });
+
+    // Criando um layout com stackSwitcher e stack
+    const box = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 10 });
+    box.append(stackSwitcher);
+    box.append(stack);
+
+    window.set_child(box);
+    window.present();
+});
+
+app.run([]);
+```
+
+`Gtk.Stack` é um container que permite alternar entre diferentes widgets ou layouts dentro de um mesmo espaço. Aqui está um exemplo:
+
+```javascript
+imports.gi.versions.Gtk = "4.0";
+const Gtk = imports.gi.Gtk;
+const Gio = imports.gi.Gio;
+
+const app = new Gtk.Application({
+    application_id: "org.gtk.example.stack",
+    flags: Gio.ApplicationFlags.FLAGS_NONE,
+});
+
+app.connect("activate", () => {
+    const window = new Gtk.ApplicationWindow({
+        application: app,
+        title: "Gtk.Stack Example",
+        default_width: 600,
+        default_height: 400,
+    });
+
+    const stack = new Gtk.Stack();
+
+    // Criando duas páginas
+    const label1 = new Gtk.Label({ label: "This is Page 1" });
+    const label2 = new Gtk.Label({ label: "This is Page 2" });
+
+    stack.add_named(label1, "page1");
+    stack.add_named(label2, "page2");
+
+    const stackSwitcher = new Gtk.StackSwitcher({ stack });
+
+    // Criando um layout com stackSwitcher e stack
+    const box = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 10 });
+    box.append(stackSwitcher);
+    box.append(stack);
+
+    window.set_child(box);
+    window.present();
+});
+
+app.run([]);
+```
+
+#### Como Executar
+
+1. Salve o código acima em um arquivo chamado `stack_example.js`.
+
+2. Execute:
+   ```bash
+   gjs stack_example.js
+   ```
+
+#### Explicação linha a Linha
+
+1. **`imports.gi.versions.Gtk = "4.0";`**:
+   - Especifica a versão do GTK que será utilizada.
+
+2. **`const Gtk = imports.gi.Gtk;` e `const Gio = imports.gi.Gio;`**:
+   - Importa os módulos necessários para criar a interface gráfica e gerenciar a aplicação.
+
+3. **Criação da aplicação**:
+   ```javascript
+   const app = new Gtk.Application({
+       application_id: "org.gtk.example.stack",
+       flags: Gio.ApplicationFlags.FLAGS_NONE,
+   });
+   ```
+   - Cria a aplicação GTK, identificada por um ID único.
+
+4. **Conexão do evento "activate"**:
+   ```javascript
+   app.connect("activate", () => { ... });
+   ```
+   - Conecta a função que configura e exibe a interface ao evento "activate" da aplicação.
+
+5. **Criação do Gtk.ApplicationWindow**:
+   ```javascript
+   const window = new Gtk.ApplicationWindow({
+       application: app,
+       title: "Gtk.Stack Example",
+       default_width: 600,
+       default_height: 400,
+   });
+   ```
+   - Define a janela principal, associando-a à aplicação.
+
+6. **Criação do Gtk.Stack**:
+   ```javascript
+   const stack = new Gtk.Stack();
+   ```
+   - Um container que organiza widgets em "pilhas" alternáveis.
+
+7. **Adicionando widgets ao Gtk.Stack**:
+   ```javascript
+   stack.add_named(label1, "page1");
+   stack.add_named(label2, "page2");
+   ```
+   - Adiciona dois widgets (`label1` e `label2`) à pilha, identificados por nomes únicos.
+
+8. **Criação do Gtk.StackSwitcher**:
+   ```javascript
+   const stackSwitcher = new Gtk.StackSwitcher({ stack });
+   ```
+   - Um widget que permite alternar entre os itens da pilha.
+
+9. **Organização Vertical com Gtk.Box**:
+   ```javascript
+   const box = new Gtk.Box({ orientation: Gtk.Orientation.VERTICAL, spacing: 10 });
+   box.append(stackSwitcher);
+   box.append(stack);
+   ```
+   - Organiza o `Gtk.StackSwitcher` e o `Gtk.Stack` verticalmente.
+
+10. **Exibição da janela**:
+    ```javascript
+    window.set_child(box);
+    window.present();
+    ```
+    - Define o `Gtk.Box` como o widget principal da janela e exibe a janela na tela.
+
+11. **Início do loop principal**:
+    ```javascript
+    app.run([]);
+    ```
+    - Inicia a aplicação, permitindo que ela responda a eventos do usuário.
+
+#### Resumo do Código
+
+- **Objetivo**: Demonstrar o uso de `Gtk.Stack` para alternar entre diferentes widgets.
+- **Widgets Principais**:
+  - `Gtk.Stack`: Contém as páginas alternáveis.
+  - `Gtk.StackSwitcher`: Permite alternar entre as páginas da pilha.
+  - `Gtk.Box`: Organiza os widgets verticalmente.
+- **Destaques**:
+  - Uso de `add_named` para identificar cada página.
+  - Combinação de `Gtk.Stack` com `Gtk.StackSwitcher` para criar uma interface interativa.
 
 ## 8. Widgets Avançados
 
@@ -944,6 +1126,30 @@ app.run([]);
 12.3. Recursos Adicionais: Documentação, Fóruns e Comunidades  
 
 ## Glossário
+
+### Orientação a Objetos (OO)
+
+Orientação a objetos (OO) é um paradigma de programação que organiza o código em torno de **objetos**. Objetos encapsulam dados (**propriedades**) e comportamentos (**métodos**) e são criados a partir de **classes**.
+
+- **Classe**: Um "molde" que define as propriedades e métodos de um objeto. No GTK, por exemplo, `Gtk.Button` é uma classe.
+- **Objeto (ou instância)**: Um item criado a partir de uma classe. No código, uma variável como `const button = new Gtk.Button()` representa um objeto.
+- **Método**: Uma função associada a um objeto ou classe. Exemplo: `button.set_label()`.
+- **Propriedade**: Um atributo que define o estado ou característica do objeto. Exemplo: `label` em `Gtk.Button`.
+
+### Containers
+Containers são widgets especiais usados para organizar outros widgets. Exemplos incluem:
+- **Gtk.Box**: Organiza widgets horizontal ou verticalmente.
+- **Gtk.Grid**: Organiza widgets em uma grade com linhas e colunas.
+- **Gtk.Stack**: Alterna entre diferentes widgets ou layouts.
+
+### Eventos e Sinais
+Sinais são eventos emitidos por widgets para notificar que algo aconteceu. Por exemplo, o sinal "`clicked`" é emitido quando um botão é clicado.
+- **Método `connect`**: Conecta uma função a um sinal. Exemplo:
+  ```javascript
+  button.connect("clicked", () => {
+      print("Button clicked!");
+  });
+  ```
 
 ### Introspecção
 
