@@ -1,6 +1,8 @@
+
 // Importando as bibliotecas necessárias
-const Gtk = imports.gi.Gtk; // Biblioteca para criar interfaces gráficas
-const Gio = imports.gi.Gio; // Biblioteca para gerenciar a aplicação
+imports.gi.versions.Gtk = "4.0"; // Especifica a versão do GTK
+const Gtk = imports.gi.Gtk;      // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio;      // Biblioteca para gerenciar a aplicação
 
 // Criando uma aplicação GTK
 const app = new Gtk.Application({
@@ -26,10 +28,10 @@ app.connect("activate", function () {
 
     // Criando a janela principal
     const window = new Gtk.ApplicationWindow({
-        application: app,       // Associando a janela à aplicação
+        application: app,          // Associando a janela à aplicação
         title: "My First GTK App", // Título da janela
-        default_width: 400,     // Largura inicial
-        default_height: 300,    // Altura inicial
+        default_width: 800,        // Largura inicial
+        default_height: 600,       // Altura inicial
     });
 
     // Adicionando o botão à janela
