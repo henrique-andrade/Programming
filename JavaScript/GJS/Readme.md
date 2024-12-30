@@ -186,14 +186,15 @@ Antes de prosseguir com mais exemplos, vamos reforçar como **orientação a obj
   button.set_label("New Label");                         // set_label() é um método
   ```
 
-## 5. Primeiro aplicativo
+## 5. Exemplo prático: primeiro aplicativo
 
 Aqui está um exemplo prático de um aplicativo com **JavaScript e GJS**, incluindo comentários para facilitar o entendimento:
 
 ```javascript
 // Importando as bibliotecas necessárias
-const Gtk = imports.gi.Gtk; // Biblioteca para criar interfaces gráficas
-const Gio = imports.gi.Gio; // Biblioteca para gerenciar a aplicação
+imports.gi.versions.Gtk = "4.0"; // Especifica a versão do GTK
+const Gtk = imports.gi.Gtk;      // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio;      // Biblioteca para gerenciar a aplicação
 
 // Criando uma aplicação GTK
 const app = new Gtk.Application({
@@ -219,10 +220,10 @@ app.connect("activate", function () {
 
     // Criando a janela principal
     const window = new Gtk.ApplicationWindow({
-        application: app,       // Associando a janela à aplicação
+        application: app,          // Associando a janela à aplicação
         title: "My First GTK App", // Título da janela
-        default_width: 400,     // Largura inicial
-        default_height: 300,    // Altura inicial
+        default_width: 400,        // Largura inicial
+        default_height: 300,       // Altura inicial
     });
 
     // Adicionando o botão à janela
@@ -243,9 +244,7 @@ app.run([]);
    gjs my_first_app.js
    ```
 
-Vamos corrigir isso! Vou detalhar linha por linha o **"Primeiro Exemplo Completo"**, explicando cada parte do código para que você entenda exatamente o que está acontecendo.
-
-### Explicação Linha a Linha
+### Explicação linha a linha
 
 ```javascript
 // Importando as bibliotecas necessárias
@@ -380,14 +379,6 @@ app.run([]);
 
 ## 7. Containers e Layouts
 
-4.1. O que são Containers?  
-
-4.2. Trabalhando com Gtk.Box  
-
-4.3. Trabalhando com Gtk.Grid  
-
-4.4. Propriedades de Expansão e Preenchimento (`set_hexpand` e `set_vexpand`)  
-
 ### O que são Containers?
 
 No GTK, **containers** são widgets especiais que podem conter outros widgets, como botões, rótulos ou campos de entrada. Eles ajudam a organizar a interface gráfica de forma flexível e escalável.
@@ -409,7 +400,7 @@ No GTK, **containers** são widgets especiais que podem conter outros widgets, c
 3. Flexibilidade:
     - Suportam alinhamento, espaçamento e expansão dos widgets.
 
-### Conceito: Gtk.Box
+### 7.1 Gtk.Box
 
 O **Gtk.Box** é um dos containers mais simples e úteis:
 
@@ -425,20 +416,25 @@ O **Gtk.Box** é um dos containers mais simples e úteis:
 Neste exemplo, criaremos dois botões organizados horizontalmente dentro de um `Gtk.Box`.
 
 ```javascript
-const Gtk = imports.gi.Gtk;
-const Gio = imports.gi.Gio;
+// Importando as bibliotecas necessárias
+imports.gi.versions.Gtk = "4.0"; // Especifica a versão do GTK
+const Gtk = imports.gi.Gtk;      // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio;      // Biblioteca para gerenciar a aplicação
 
+// Criando uma aplicação GTK
 const app = new Gtk.Application({
     application_id: "org.gtk.example.box",
-    flags: Gio.ApplicationFlags.FLAGS_NONE,
+    flags: Gio.ApplicationFlags.FLAGS_NONE, // Sem configurações adicionais
 });
 
+// Conectando a função que será chamada ao iniciar a aplicação
 app.connect("activate", function () {
+    // Criando a janela principal
     const window = new Gtk.ApplicationWindow({
         application: app,
         title: "Gtk.Box Example",
-        default_width: 400,
-        default_height: 200,
+        default_width: 800,
+        default_height: 400,
     });
 
     // Criando o container horizontal
@@ -455,17 +451,165 @@ app.connect("activate", function () {
     // Adicionando o container à janela
     window.set_child(box);
 
+    // Mostrando a janela
     window.present();
 });
 
+// Executando a aplicação
 app.run([]);
 ```
 
-#### O que este exemplo faz?
+### Como executar
+1. Salve o código acima como `my_gtk_box.js`.
+2. Execute:
+   ```bash
+   gjs my_gtk_box.js
+   ```
 
-1. Cria um container horizontal (`Gtk.Box`) com 10px de espaçamento entre os widgets.
-2. Adiciona dois botões ao container.
-3. Define o container como o conteúdo principal da janela.
+### Explicação linha a linha
+
+Aqui está a explicação detalhada, linha por linha, do script **`my_gtk_box.js`**:
+
+**Parte 1: Importando e Configurando Bibliotecas**
+
+```javascript
+imports.gi.versions.Gtk = "4.0";
+```
+
+- O que faz?
+    - Informa ao GJS que você deseja usar a versão **4.0** do GTK.
+    - Resolve o problema de múltiplas versões disponíveis.
+
+```javascript
+const Gtk = imports.gi.Gtk;
+const Gio = imports.gi.Gio;
+```
+
+- O que faz?
+    - Importa os módulos necessários:
+        - `Gtk`: Contém classes e métodos para criar interfaces gráficas.
+        - `Gio`: Gerencia aplicativos e fornece suporte para integração com o sistema operacional.
+
+**Parte 2: Criando a Aplicação**
+
+```javascript
+const app = new Gtk.Application({
+    application_id: "org.gtk.example.box",
+    flags: Gio.ApplicationFlags.FLAGS_NONE,
+});
+```
+
+- O que faz?
+    - Cria uma nova aplicação GTK com:
+        - **`application_id`**: Identificador único da aplicação.
+        - **`flags`**: Define comportamentos adicionais (aqui, `FLAGS_NONE` significa "sem configurações especiais").
+
+**Parte 3: Conectando a Função Principal**
+
+```javascript
+app.connect("activate", function () {
+```
+
+- O que faz?
+    - Conecta uma função ao evento `"activate"`, que é disparado automaticamente quando a aplicação é iniciada.
+    - A função configurará a interface gráfica.
+
+**Parte 4: Criando a Janela**
+
+```javascript
+const window = new Gtk.ApplicationWindow({
+    application: app,
+    title: "Gtk.Box Example",
+    default_width: 800,
+    default_height: 400,
+});
+```
+
+- O que faz?
+    - Cria uma janela principal associada à aplicação.
+    - Propriedades:
+        - **`application`**: Liga a janela à aplicação `app`.
+        - **`title`**: Define o título da janela.
+        - **`default_width`** e **`default_height`**: Dimensões iniciais da janela.
+
+**Parte 5: Criando o Container (Gtk.Box)**
+
+```javascript
+const box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, spacing: 10 });
+```
+
+- O que faz?
+    - Cria um container `Gtk.Box` para organizar os widgets horizontalmente.
+    - Propriedades:
+        - **`orientation`**: Define a orientação do container (horizontal ou vertical).
+        - **`spacing`**: Define o espaço entre os widgets dentro do container.
+
+**Parte 6: Criando os Botões**
+
+```javascript
+const button1 = new Gtk.Button({ label: "Button 1" });
+const button2 = new Gtk.Button({ label: "Button 2" });
+```
+
+- O que faz?
+    - Cria dois botões com textos especificados pelas propriedades `label`.
+    - **`Gtk.Button`** é uma classe para criar botões interativos.
+
+**Parte 7: Adicionando Widgets ao Container**
+
+```javascript
+box.append(button1);
+box.append(button2);
+```
+
+- O que faz?
+    - Adiciona os botões ao container `box` na ordem em que foram chamados.
+    - O `Gtk.Box` organiza os widgets horizontalmente, então os botões aparecerão lado a lado.
+
+**Parte 8: Configurando o Layout na Janela**
+
+```javascript
+window.set_child(box);
+```
+
+- O que faz?
+    - Define o `Gtk.Box` como o widget principal da janela.
+    - No GTK 4, cada janela pode conter apenas um widget diretamente, então usamos um container para adicionar múltiplos widgets.
+
+**Parte 9: Exibindo a Janela**
+
+```javascript
+window.present();
+```
+
+- O que faz?
+    - Exibe a janela na tela.
+
+**Parte 10: Executando a Aplicação**
+
+```javascript
+app.run([]);
+```
+
+- O que faz?
+    - Inicia o loop principal da aplicação, permitindo que ela responda a eventos como cliques ou fechamentos.
+    - O loop continua até que todas as janelas sejam fechadas.
+
+
+### Resumo do Código
+
+1. Configuração:
+    - Especificamos a versão do GTK e importamos os módulos necessários.
+    - Criamos uma aplicação GTK com `Gtk.Application`.
+
+2. Interface Gráfica:
+    - Criamos uma janela (`Gtk.ApplicationWindow`) e um container (`Gtk.Box`).
+    - Adicionamos dois botões ao container.
+    - Configuramos o container como o conteúdo da janela.
+
+3. Execução:
+    - Conectamos a função ao evento `"activate"`.
+    - Iniciamos o loop principal da aplicação com `app.run([])`.
 
 ### Conceito: Expansão e Preenchimento
 
@@ -476,7 +620,7 @@ Os widgets no GTK podem ser configurados para expandir ou preencher o espaço de
 - Preenchimento (`spacing`):
     - Controla o espaço entre os widgets.
 
-#### Exemplo: Expansão Horizontal
+**Exemplo: Expansão Horizontal**
 
 Modifique o exemplo anterior para que os botões ocupem toda a largura disponível:
 
@@ -485,7 +629,7 @@ button1.set_hexpand(true);
 button2.set_hexpand(true);
 ```
 
-### Conceito: Gtk.Grid
+### 7.2 Gtk.Grid
 
 O **Gtk.Grid** é um container que organiza widgets em uma **grade**, com linhas e colunas. Ele é útil para layouts mais complexos, como formulários.
 
@@ -499,12 +643,24 @@ O **Gtk.Grid** é um container que organiza widgets em uma **grade**, com linhas
 Neste exemplo, criaremos um formulário com dois rótulos e dois campos de entrada organizados em uma grade.
 
 ```javascript
+// Importando as bibliotecas necessárias
+imports.gi.versions.Gtk = "4.0"; // Especifica a versão do GTK
+const Gtk = imports.gi.Gtk;      // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio;      // Biblioteca para gerenciar a aplicação
+
+// Criando uma aplicação GTK
+const app = new Gtk.Application({
+    application_id: "org.gtk.example.box",
+    flags: Gio.ApplicationFlags.FLAGS_NONE, // Sem configurações adicionais
+});
+
+// Conectando a função que será chamada ao iniciar a aplicação
 app.connect("activate", function () {
     const window = new Gtk.ApplicationWindow({
         application: app,
         title: "Gtk.Grid Example",
-        default_width: 400,
-        default_height: 200,
+        default_width: 800,
+        default_height: 400,
     });
 
     // Criando a grade
@@ -525,24 +681,181 @@ app.connect("activate", function () {
     // Adicionando a grade à janela
     window.set_child(grid);
 
+    // Mostrando a janela
     window.present();
+});
+
+// Executando a aplicação
+app.run([]);
+```
+
+### Como executar
+
+1. Salve o código acima como `my_gtk_grid.js`.
+
+2. Execute:
+
+    ```bash
+    gjs my_gtk_grid.js
+    ```
+
+### Explicação linha a linha
+
+**Parte 1: Importando e Configurando Bibliotecas**
+
+```javascript
+imports.gi.versions.Gtk = "4.0"; // Especifica a versão do GTK
+```
+
+- O que faz?
+    - Define explicitamente que a versão do GTK usada será a 4.0.
+    - Isso resolve problemas de compatibilidade caso várias versões do GTK estejam instaladas.
+
+```javascript
+const Gtk = imports.gi.Gtk;      // Biblioteca para criar interfaces gráficas
+const Gio = imports.gi.Gio;      // Biblioteca para gerenciar a aplicação
+```
+
+- O que faz?
+    - Importa as bibliotecas:
+        - **`Gtk`**: Fornece classes e funções para criar interfaces gráficas.
+        - **`Gio`**: Fornece funcionalidades para gerenciar aplicações GTK.
+
+**Parte 2: Criando a Aplicação**
+
+```javascript
+const app = new Gtk.Application({
+    application_id: "org.gtk.example.box",
+    flags: Gio.ApplicationFlags.FLAGS_NONE, // Sem configurações adicionais
 });
 ```
 
-#### O que este exemplo faz?
+- O que faz?
+    - Cria uma aplicação GTK.
+    - Propriedades:
+        - **`application_id`**: Um identificador único para o aplicativo.
+        - **`flags`**: Define comportamentos adicionais (aqui, nenhum é configurado).
 
-1. Cria uma grade com 10px de espaçamento entre colunas e linhas.
-2. Adiciona dois rótulos e dois campos de entrada em posições específicas da grade.
+**Parte 3: Conectando a Função Principal**
 
-### **Resumo**
+```javascript
+app.connect("activate", function () {
+```
 
-1. **Gtk.Box**:
-    - Organiza widgets horizontalmente ou verticalmente.
-    - Usa `spacing` para definir o espaço entre widgets.
-    - Usa `set_hexpand` e `set_vexpand` para ocupar espaço adicional.
-2. **Gtk.Grid**:
-    - Organiza widgets em linhas e colunas.
-    - Permite layouts complexos, como formulários.
+- O que faz?
+    - Conecta uma função ao evento `"activate"`, que é chamado quando a aplicação é iniciada.
+    - Essa função configura a interface gráfica.
+
+**Parte 4: Criando a Janela**
+
+```javascript
+const window = new Gtk.ApplicationWindow({
+    application: app,
+    title: "Gtk.Grid Example",
+    default_width: 800,
+    default_height: 400,
+});
+```
+
+- O que faz?
+    - Cria a janela principal da aplicação.
+    - Propriedades:
+        - **`application`**: Associa a janela à aplicação criada.
+        - **`title`**: Define o título da janela.
+        - **`default_width`** e **`default_height`**: Define as dimensões iniciais da janela.
+
+**Parte 5: Criando a Grade (Gtk.Grid)**
+
+```javascript
+const grid = new Gtk.Grid({ column_spacing: 10, row_spacing: 10 });
+```
+
+- O que faz?
+    - Cria um widget `Gtk.Grid` que organiza outros widgets em uma grade.
+    - Propriedades:
+        - **`column_spacing`**: Define o espaço entre colunas.
+        - **`row_spacing`**: Define o espaço entre linhas.
+
+**Parte 6: Criando os Widgets**
+
+```javascript
+const label1 = new Gtk.Label({ label: "First Name:" });
+const entry1 = new Gtk.Entry();
+const label2 = new Gtk.Label({ label: "Last Name:" });
+const entry2 = new Gtk.Entry();
+```
+
+- O que faz?
+    - Cria widgets para o formulário:
+        - **`Gtk.Label`**: Um rótulo de texto.
+        - **`Gtk.Entry`**: Um campo de entrada de texto.
+
+**Parte 7: Adicionando Widgets à Grade**
+
+```javascript
+grid.attach(label1, 0, 0, 1, 1); // Coluna 0, Linha 0
+grid.attach(entry1, 1, 0, 1, 1); // Coluna 1, Linha 0
+grid.attach(label2, 0, 1, 1, 1); // Coluna 0, Linha 1
+grid.attach(entry2, 1, 1, 1, 1); // Coluna 1, Linha 1
+```
+
+- O que faz?
+    - Adiciona os widgets à grade em posições específicas.
+    - Parâmetros de `grid.attach()`:
+        - **`widget`**: O widget a ser adicionado.
+        - **`left`**: Coluna inicial.
+        - **`top`**: Linha inicial.
+        - **`width`**: Quantidade de colunas que o widget ocupará.
+        - **`height`**: Quantidade de linhas que o widget ocupará.
+
+    - Exemplo:
+        - **`label1`** é adicionado na coluna 0, linha 0.
+        - **`entry1`** é adicionado na coluna 1, linha 0.
+
+**Parte 8: Adicionando a Grade à Janela**
+
+```javascript
+window.set_child(grid);
+```
+
+- O que faz?
+    - Define o `Gtk.Grid` como o widget principal da janela.
+    - No GTK 4, uma janela pode conter apenas um widget diretamente.
+
+**Parte 9: Exibindo a Janela**
+
+```javascript
+window.present();
+```
+
+- O que faz?
+    - Exibe a janela na tela.
+
+**Parte 10: Executando a Aplicação**
+
+```javascript
+app.run([]);
+```
+
+- O que faz?
+    - Inicia o loop principal da aplicação, permitindo que ela responda a eventos (como entrada de texto ou fechamento da janela).
+
+### Resumo do código
+
+1. **Configuração**:
+    - Define a versão do GTK e importa as bibliotecas necessárias.
+    - Cria uma aplicação GTK.
+2. **Interface Gráfica**:
+    - Cria uma janela principal.
+    - Usa `Gtk.Grid` para organizar widgets (rótulos e campos de entrada) em uma grade.
+    - Adiciona os widgets às posições apropriadas na grade.
+3. **Execução**:
+    - Conecta a função principal ao evento `"activate"`.
+    - Exibe a janela e inicia o loop principal da aplicação.
+
+### 7.3 Gtk.Stack
+
+
 
 ## 8. Widgets Avançados
 
