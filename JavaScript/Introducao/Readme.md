@@ -1,0 +1,1 @@
+Com base no livro "Horstmann (2020) Modern JavaScript for the Impatient"
