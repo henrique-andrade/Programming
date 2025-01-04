@@ -14,7 +14,7 @@ const app = new Gtk.Application({
 app.connect("activate", function () {
 
     const box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, spacing: 10 });
-    const grid = new Gtk.Grid({ column_spacing: 10, row_spacing: 10 });
+    const grid = new Gtk.Grid({ column_spacing: 5, row_spacing: 5 });
 
     // Criando botões
     const button1 = new Gtk.Button({ label: "Button 1" });
@@ -40,15 +40,17 @@ app.connect("activate", function () {
         default_height: 600,       // Altura inicial
     });
 
-    button1.set_hexpand(true);
+    button1.set_hexpand(false);
     button2.set_hexpand(true);
     button3.set_hexpand(true);
 
-    const label1 = new Gtk.Label({ label: "First Name:" });
+    const label1 = new Gtk.Label({ label: "Meu app!" });
 
     // Adicionando os botões ao container
-    box.append(label1);
-    box.append(button1);
+    grid.attach(label1, 0, 0, 1, 1);
+    grid.attach(button1, 0, 1, 1, 1);
+    box.append(grid);    
+    //box.append(button1);
     box.append(button2);
     box.append(button3);
     
