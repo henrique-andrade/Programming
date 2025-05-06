@@ -1,2 +1,12 @@
 name = "ada lovelace"
 print(name.title())
+print(name.upper())
+print(name.lower())
+print(name.capitalize())
+print(name.swapcase())
+print(name.title().swapcase())
+print(name.title().upper())
+print(name.title().lower())
+print(name.title().capitalize())
+print(name.title().swapcase().upper())
+print(name.title().swapcase().lower())
